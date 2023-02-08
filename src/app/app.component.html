@@ -1,1 +1,164 @@
-<p>app works!</p>
+<div class="table-data m-3">
+  <div class="m-3">
+    <h1>Student Marksheet</h1>
+    <div class="input-group m-3 new">
+      <span class="input-group-text" id="inputGroup-sizing-default"
+        >Search</span
+      >
+      <input
+        type="text"
+        class="form-control"
+        aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-default"
+        (keyup)="filterName($event)"
+      />
+    </div>
+    <div class="tables">
+      <div>
+        <table class="table table-success table-striped">
+          <tr>
+            <th *ngIf="!deSelect">
+              <input
+                type="checkbox"
+                class="inp-checkbox"
+                (input)="onMasterSelect($event)"
+                [checked]="tdChecked"
+              />
+            </th>
+            <th *ngIf="deSelect">
+              <button class="deselect-btn" (click)="onDeselectAll()">-</button>
+            </th>
+            <th>SI.NO</th>
+            <th>
+              NAME
+              <div class="img-Class">
+                <img
+                  (click)="sortFunc('ASC', 'name')"
+                  src="https://cdn-icons-png.flaticon.com/512/2/2231.png"
+                />
+                <img
+                  (click)="sortFunc('DESC', 'name')"
+                  src="https://cdn-icons-png.flaticon.com/512/0/901.png"
+                />
+              </div>
+            </th>
+            <th>
+              GENDER
+              <div class="img-Class">
+                <img
+                  (click)="sortFunc('ASC', 'gender')"
+                  src="https://cdn-icons-png.flaticon.com/512/2/2231.png"
+                />
+                <img
+                  (click)="sortFunc('DESC', 'gender')"
+                  src="https://cdn-icons-png.flaticon.com/512/0/901.png"
+                />
+              </div>
+            </th>
+            <th>
+              PHYSICS
+              <div class="img-Class">
+                <img
+                  (click)="sortFunc('ASC', 'physics')"
+                  src="https://cdn-icons-png.flaticon.com/512/2/2231.png"
+                />
+                <img
+                  (click)="sortFunc('DESC', 'physics')"
+                  src="https://cdn-icons-png.flaticon.com/512/0/901.png"
+                />
+              </div>
+            </th>
+            <th>
+              MATHS
+              <div class="img-Class">
+                <img
+                  (click)="sortFunc('ASC', 'maths')"
+                  src="https://cdn-icons-png.flaticon.com/512/2/2231.png"
+                />
+                <img
+                  (click)="sortFunc('DESC', 'maths')"
+                  src="https://cdn-icons-png.flaticon.com/512/0/901.png"
+                />
+              </div>
+            </th>
+            <th>
+              ENGLISH
+              <div class="img-Class">
+                <img
+                  (click)="sortFunc('ASC', 'english')"
+                  src="https://cdn-icons-png.flaticon.com/512/2/2231.png"
+                />
+                <img
+                  (click)="sortFunc('DESC', 'english')"
+                  src="https://cdn-icons-png.flaticon.com/512/0/901.png"
+                />
+              </div>
+            </th>
+          </tr>
+          <tr *ngIf="dataList?.length == 0">
+            <th colspan="8">NO DATA FOUND</th>
+          </tr>
+          <tbody *ngFor="let items of dataList; let i = index">
+            <tr
+              [class]="items.checked ? 'bg-primary-subtle' : ''"
+              *ngIf="pagination.index == getPageIndex(i)"
+            >
+              <th>
+                <input
+                  type="checkbox"
+                  class="inp-checkbox"
+                  [value]="items.checked"
+                  [checked]="items.checked"
+                  (input)="onSelectRow($event, i)"
+                />
+              </th>
+              <th>{{ i + 1 }}</th>
+              <td>{{ items.name }}</td>
+              <td>{{ items.gender }}</td>
+              <td>
+                {{ items?.physics }}
+              </td>
+              <td>{{ items.maths }}</td>
+              <td>{{ items.english }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="page-btn">
+          <ng-template ngFor let-pageIndex [ngForOf]="getPages()" let-i="index">
+            <button (click)="pagination.index = pageIndex" class="normal-btn">
+              {{ pageIndex + 1 }}
+            </button>
+          </ng-template>
+        </div>
+        <button class="inp-submit" (click)="submitRows()">SUBMIT</button>
+      </div>
+      <div>
+        <table class="table table-success table-striped">
+          <tr>
+            <th>SI.NO</th>
+            <th>NAME</th>
+            <th>GENDER</th>
+            <th>PHYSICS</th>
+            <th>MATHS</th>
+            <th>ENGLISH</th>
+          </tr>
+          <tr *ngIf="selectedArray.length == 0">
+            <th colspan="7">No Data Found</th>
+          </tr>
+          <tbody *ngFor="let items of selectedArray; let i = index">
+            <tr>
+              <th>{{ i + 1 }}</th>
+              <td>{{ items.name }}</td>
+              <td>{{ items.gender }}</td>
+              <td>
+                {{ items?.physics }}
+              </td>
+              <td>{{ items.maths }}</td>
+              <td>{{ items.english }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
